@@ -23,6 +23,11 @@ class Group(models.Model):
         blank=True,
         through="forum.UserGroup"   
     )
+    # All disabled group will be excluded from showing
+    is_disabled = models.BooleanField(
+        "if disabled",
+        default=False
+    )
 
     class Meta:
         app_label = 'share'
