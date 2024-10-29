@@ -8,7 +8,7 @@ class UserGroup(models.Model):
         related_name="following_groups"
     )
     to_group = models.ForeignKey(
-        "forum.Group",
+        "share.Group",
         related_name="members"
     )
     joined_at = models.DateField(
@@ -16,5 +16,5 @@ class UserGroup(models.Model):
     )
 
     class Meta:
-        app_label = "forum"
+        app_label = "share"
         unique_together = ('user', 'to_group')

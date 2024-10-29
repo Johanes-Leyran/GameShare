@@ -24,6 +24,9 @@ class Group(models.Model):
         through="forum.UserGroup"   
     )
 
+    class Meta:
+        app_label = 'share'
+
     def __str__(self):
         return self.name
 

@@ -29,9 +29,7 @@ class GameShareUser(AbstractUser):
         through="accounts.Associate",
         symmetrical=False
     )
-    # TODO: implement this stuff
     user_post = None
-    user_groups = None
     user_comments = None
 
     USERNAME_FIELD = "email"
