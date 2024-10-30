@@ -13,7 +13,8 @@ class Comment(models.Model):
         "self",
         on_delete=models.SET_NULL
         null=True,
-        default=None
+        default=None,
+        related_name="comment_childrens"
     )
     # TODO: add liking system for the comment
     text_content = models.TextField()

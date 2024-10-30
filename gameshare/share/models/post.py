@@ -14,7 +14,9 @@ class Post(models.Model):
     )
     group = models.ForeignKey(
         "share.Group",
-        on_delete=models.DO_NOTHING
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="group_posts"
     )
     title = models.CharField(
         "Title of the post",
@@ -37,7 +39,18 @@ class Post(models.Model):
     # TODO: add post history of edits
     def save(self, *args, **kwargs):
         if not self.id:
-            self.title_slug = slugify(self.title)
+            slug = slugify(self.title) 
+
+            try:
+                count = self.objects.filter(
+                    title_slug=slug,
+                    group=self.group
+                ).count()
+
+                self.title_slug = f"{slug}_{count+1}"
+
+            except Post.DoesNotExist:
+                self.title_slug = slug
 
         super(Post, self).save(*args, **kwargs)
     
