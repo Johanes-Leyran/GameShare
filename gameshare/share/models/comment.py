@@ -17,6 +17,7 @@ class Comment(models.Model):
         related_name="comment_childrens"
     )
     # TODO: add liking system for the comment
+    # TODO: add editing and history system 
     text_content = models.TextField()
     comment_at = models.DateField(
         auto_now_add=True
