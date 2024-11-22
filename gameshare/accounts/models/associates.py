@@ -31,3 +31,9 @@ class Associate(models.Model):
     class Meta:
         app_label = "accounts"
         unique_together = ('from_user', 'to_user', 'relationship_type')
+
+    def save(self, *args, **kwargs):
+        if(self.to_user == self.from_user):
+            raise KeyError("a user cannot have associates to the same user")
+        
+        super().save(*args, **kwargs)
