@@ -30,7 +30,6 @@ class GameShareUser(AbstractUser):
         symmetrical=False
     )
     user_post = None
-    user_comments = None
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = [
@@ -38,10 +37,7 @@ class GameShareUser(AbstractUser):
     ]
     
     objects = GamseShareUserManager()
-
-    class Meta:
-        app_label = "accounts"
-
+   
     def __str__(self):
         return self.email
     
