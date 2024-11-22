@@ -2,15 +2,17 @@ from django.db import models
 from django.conf import settings
 
 
+user_model = settings.AUTH_USER_MODEL
+
 class Associate(models.Model):
     from_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        user_model,
         verbose_name="From User",
         related_name="associates_to", 
         on_delete=models.CASCADE
     )
     to_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        user_model,
         verbose_name="To User",
         related_name="associates_from",
         on_delete=models.CASCADE
@@ -30,10 +32,18 @@ class Associate(models.Model):
 
     class Meta:
         app_label = "accounts"
-        unique_together = ('from_user', 'to_user', 'relationship_type')
+        constraints = [
+            models.UniqueConstraint(fields=[
+                "to_user", 
+                "relationship_type", 
+                "from_user"
+                ],
+                name="associate must be unique!"
+            )
+        ]
 
     def save(self, *args, **kwargs):
         if(self.to_user == self.from_user):
-            raise KeyError("a user cannot have associates to the same user")
+            raise KeyError("a user cannot have associates to itself")
         
         super().save(*args, **kwargs)
